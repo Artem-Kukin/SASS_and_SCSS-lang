@@ -1,0 +1,85 @@
+@import "variables";
+
+@import "mixins";
+
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: $bgColor;
+}
+
+#grid {
+  float: left;
+  width: 100%;
+  > div {
+    @include grid(4, 1%);
+  }
+}
+
+//  Принято указывать аргументы в порядке указанных ранее параметров,
+// но если необходимо указать иначе, то нужно обозначить к какому
+// параметру присваевается значение.
+// Ранее присвоенно значение по-умолчанию ($index: 0.8), не указывается
+// в аргументе повторно.
+.block {
+  @include font($fontWeight: bold);
+  background: $blockBg;
+  border: $blockBorder;
+}
+
+.first {
+  height: $blockFirstHeigth;
+  width: $blockFirstWigth;
+  @include padd(20px 0px 10px);
+}
+
+// Обращаемся ко всем классам ".block" у которых нету класса ".first"
+.block:not(.first) {
+  margin-top: 20px;
+  height: 200px;
+  width: $blockWidth;
+}
+
+// Демонстрация работы вложенных стилей
+#block__central {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    color: red;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    a {
+      color: blueviolet;
+    }
+  }
+}
+
+@include link(silver, red, blue, green);
+
+.header {
+  @include link(silver, red, blue, green) {
+    background: #000;
+    &:visited {
+      color: coral;
+    }
+  }
+}
+
+@for $i from 24 to 29 {
+  .#{$someVar}-#{$i} {
+    width: 50px + $i;
+    height: 50px + $i;
+  }
+}

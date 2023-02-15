@@ -1,0 +1,47 @@
+// Создание mixin осуществляется с помощью " @mixin name (params) {  } "
+// Значение по-умолчанию, указывается сразу в (params - $index: 0.8)
+
+@mixin grid($cols, $margin) {
+  float: left;
+  background: #ce3d3d;
+  margin-bottom: $margin;
+  height: 150px;
+
+  @if ($cols >= 5) {
+    width: 100%;
+    margin-right: 0;
+  } @else {
+    width: ((100% - (($cols - 1) * $margin)) / $cols);
+    margin-right: $margin;
+  }
+
+  &:nth-child(#{$cols}n) {
+    margin-right: 0;
+  }
+}
+
+@mixin font($index: 0.8, $fontWeight) {
+  font-size: calc($fontSize * $index);
+  font-weight: $fontWeight;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+@mixin padd($padd...) {
+  padding: $padd;
+}
+
+@mixin link($link, $hover, $active, $visited) {
+  a {
+    color: $link;
+    // " & " это амперсант, он сообщает данной ссылке,
+    //  что к ней применяется дополнительный эффект
+    &:hover {
+      color: darken($link, 20%);
+    }
+    &:active {
+      color: $active;
+    }
+    @content;
+  }
+}
